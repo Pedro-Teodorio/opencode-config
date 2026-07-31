@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Entrypoint da CLI opencode-config.
+# Resolve o próprio path e carrega a biblioteca relativa ao layout do repositório.
+set -euo pipefail
+
+_self=$(readlink -f -- "$0" 2>/dev/null || {
+  # Fallback sem readlink -f (resolve symlinks manualmente o suficiente para bin/)
+  CDPATH= cd -- "$(dirname -- "$0")" && printf '%s/%s\n' "$(pwd -P)" "$(basename -- "$0")"
+})
+_bin_dir=$(CDPATH= cd -- "$(dirname -- "$_self")" && pwd -P)
+_repo_root=$(CDPATH= cd -- "$_bin_dir/.." && pwd -P)
+_lib="$_repo_root/lib/opencode-config.sh"
+
+if [ ! -f "$_lib" ]; then
+  printf 'opencode-config: library not found: %s\n' "$_lib" >&2
+  exit 1
+fi
+
+# shellcheck source=lib/opencode-config.sh
+. "$_lib"
+
+opencode_config_main "$@"

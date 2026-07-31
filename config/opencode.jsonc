@@ -1,0 +1,29 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": true,
+  "lsp": true,
+  "formatter": true,
+  "instructions": ["AGENTS.md", "rules/*", "rules/common/harness.md"],
+  "plugin": ["@warp-dot-dev/opencode-warp"],
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}",
+      },
+      "enabled": true,
+      "oauth": false,
+    },
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/pedro",
+      ],
+      "enabled": true,
+    },
+  },
+}

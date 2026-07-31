@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "product": "developer-tooling",
+  "repo": "opencode-config",
+  "memory": {
+    "root": "opencode-config",
+    "maxContextFiles": 12,
+    "maxContextChars": 24000
+  },
+  "paths": {
+    "productRoot": "developer-tooling",
+    "specs": "specs",
+    "ideas": "ideas",
+    "activeContext": "memory/active-context.md",
+    "sessionLogs": "memory/session-logs",
+    "constitution": "constitution.md",
+    "sharedConstitution": "shared-constitution.md",
+    "mistakeLedger": "mistake-ledger.md",
+    "projectOverview": "project-overview.md"
+  },
+  "gates": {
+    "requirePlanApproved": true,
+    "requireEvidence": true
+  },
+  "policies": {
+    "staleTasks": "soft",
+    "testFailStreakAtypical": 3
+  },
+  "verify": {
+    "final": [
+      "bash tests/opencode-config_test.sh all"
+    ]
+  }
+}

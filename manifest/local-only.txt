@@ -1,0 +1,11 @@
+.env
+.gitignore
+.opencode-config-state
+bun.lock
+bun.lockb
+node_modules
+npm-shrinkwrap.json
+package-lock.json
+package.json
+pnpm-lock.yaml
+yarn.lock

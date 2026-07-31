@@ -1,0 +1,23 @@
+# Configuração local do Harness
+harness.local.json
+
+# Segredos e credenciais
+.env
+.env.*
+*.key
+*.pem
+credentials.json
+
+# Dependências instaladas
+node_modules/
+
+# Estado local, backups e temporários
+.opencode-config-state
+.opencode-config-state.*
+backups/
+.cache/
+tmp/
+*.bak
+*.backup
+*.tmp
+*~
