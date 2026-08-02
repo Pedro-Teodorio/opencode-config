@@ -14,6 +14,41 @@ fail() {
   exit 1
 }
 
+validate_pinned_configuration() {
+  local agents_dir="$CONFIG_ROOT/agents"
+
+  grep -Fq '"model": "openai/gpt-5.6-luna"' "$CONFIG_ROOT/opencode.jsonc" \
+    || fail 'agent.build deve manter o model pinado openai/gpt-5.6-luna'
+  grep -Fq '"reasoningEffort": "high"' "$CONFIG_ROOT/opencode.jsonc" \
+    || fail 'agent.build deve manter reasoningEffort high'
+  grep -Fq '"@modelcontextprotocol/server-filesystem",' "$CONFIG_ROOT/opencode.jsonc" \
+    || fail 'MCP filesystem ausente da configuração canônica'
+  grep -Fq '"{env:HOME}",' "$CONFIG_ROOT/opencode.jsonc" \
+    || fail 'MCP filesystem deve usar {env:HOME}'
+
+  grep -Fq 'model: openai/gpt-5.6-sol' "$agents_dir/architect.md" \
+    || fail 'architect deve manter o model pinado'
+  grep -Fq 'model: openai/gpt-5.6-sol' "$agents_dir/planner.md" \
+    || fail 'planner deve manter o model pinado'
+  grep -Fq 'model: openai/gpt-5.6-luna' "$agents_dir/tdd-guide.md" \
+    || fail 'tdd-guide deve manter o model pinado'
+  grep -Fq 'model: xai/grok-4.5' "$agents_dir/discussion.md" \
+    || fail 'discussion deve manter o model pinado'
+  grep -Fq 'model: xai/grok-4.5' "$agents_dir/code-reviewer.md" \
+    || fail 'code-reviewer deve manter o model pinado'
+
+  while IFS= read -r agent; do
+    grep -Fq 'reasoningEffort: high' "$agents_dir/$agent.md" \
+      || fail "$agent deve manter reasoningEffort high"
+  done <<'EOF'
+architect
+planner
+tdd-guide
+discussion
+code-reviewer
+EOF
+}
+
 inventory() {
   local expected actual path scan_result
 
@@ -115,17 +150,17 @@ EOF
 
   if ! (CDPATH= cd -- "$CONFIG_ROOT" && sha256sum --check --strict --status <<'EOF'
 ae8b2a03122da19df32080e226e51f2bffb35818367a7b11ec329551a4df496e  AGENTS.md
-ecda2cda546b000870f9baa864747a36d65dbbe7856cdabd612ab6c5ac4f5bc4  agents/architect.md
-41f724c5f99fd559bd817d8813751f7907e6d6677208b3cd7b064eb84aa4b0b6  agents/code-reviewer.md
-593cda19a1ee6196fd26cf5f20d0721deee9eb11b5e774d2f8d86a0183d22543  agents/discussion.md
-bddd5731d6087db2dd5f112a768e1fc95da2a8203784958e2fb859331242a8f1  agents/planner.md
-863689ddaa0727c6afc19ec7a35a4c406ee3caa80701f78f13d2b264961b28b7  agents/tdd-guide.md
+23afd3d9dfa8d98455047be254082ba0e0c0780c3ea8a466e958421eb783012d  agents/architect.md
+f5c9ed4e20a848dc345da01785720ec86363464fb728b9432db558e6a2546069  agents/code-reviewer.md
+9768d0ab86f42188666a68e5009f721514fe72da1ccff917a5260d1dbf6b4b87  agents/discussion.md
+15cb348e3c66c3433fa7357c9ccd2ff413488ae9b8c5ad7c886a7efdc9fdabe4  agents/planner.md
+60bf63ec75a8128d5ec1ac5db42c18be14610c7d81d9dd62b103ceffec896c0b  agents/tdd-guide.md
 c160c18c739fdd661feba5d83305e02820e5d7e799597ea8058a208a1b6ec189  command/approve.md
 70d75fc218d4e28245c57b1f9e96a79603c3d6309412ed09f4a16843d29c9668  command/build.md
 c140c75172ac73289eae3ed0e736af2f3601ab1fc15f2d8b91e09ccd77589c90  command/close.md
 248a3226b36aaf4b87da1c923134e0fb1bc25a41c94dd3d1bbfe31fcbc3c0d96  command/discuss.md
 70a3fa906f24d1339202488d1fb9814da77203ebc99522712a45d1617186a854  command/spec.md
-1512b819aec186af2c401c1978471ac58839b675dc09447df9eaa2d6a9a2b0d9  opencode.jsonc
+1dcfb0611238bfc78a0f8ba6657aabc24fbc1b99d6435fe24d584d29d1f5a6b2  opencode.jsonc
 c023eb141a1d594adb19d2500378b5fabc13613c96d9c995a80a2bdae947e703  rules/README.md
 5c98f01ec3c0ab8bba04a82c67a2584e7f9265e5ddc2b0e5781bbe50b1497c65  rules/common/agents.md
 52d1da9e124bfbef9f65f0401ec76b48f8e6293c8971969303efd4d7292a6a90  rules/common/coding-style.md
@@ -220,6 +255,8 @@ EOF
   if [ -n "$scan_result" ]; then
     fail 'a árvore canônica contém conteúdo sensível ou gerado excluído'
   fi
+
+  validate_pinned_configuration
 
   printf 'PASS: inventory\n'
 }

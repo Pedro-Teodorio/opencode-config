@@ -1,6 +1,8 @@
 ---
 description: Test-Driven Development specialist enforcing write-tests-first methodology. Use PROACTIVELY when writing new features, fixing bugs, or refactoring code. Ensures 80%+ test coverage.
 mode: subagent
+model: openai/gpt-5.6-luna
+reasoningEffort: high
 permission:
   edit: allow
   bash: allow

@@ -5,6 +5,12 @@
   "formatter": true,
   "instructions": ["AGENTS.md", "rules/*", "rules/common/harness.md"],
   "plugin": ["@warp-dot-dev/opencode-warp"],
+  "agent": {
+    "build": {
+      "model": "openai/gpt-5.6-luna",
+      "reasoningEffort": "high",
+    },
+  },
   "mcp": {
     "context7": {
       "type": "remote",
@@ -21,7 +27,7 @@
         "npx",
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "/home/pedro",
+        "{env:HOME}",
       ],
       "enabled": true,
     },

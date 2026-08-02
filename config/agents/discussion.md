@@ -2,6 +2,8 @@
 name: discussion
 description: Tech lead para discussão técnica — brainstorm de arquitetura, design, regras de negócio, trade-offs e viabilidade. Honesto, direto, desafia ideias. Em repos Harness, documenta ideias no vault resolvido.
 mode: primary
+model: xai/grok-4.5
+reasoningEffort: high
 permission:
   edit:
     "*": deny

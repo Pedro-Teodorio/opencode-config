@@ -1,6 +1,8 @@
 ---
 description: Expert code review specialist. Proactively reviews code for quality, security, and maintainability. Use immediately after writing or modifying code. MUST BE USED for all code changes.
 mode: subagent
+model: xai/grok-4.5
+reasoningEffort: high
 permission:
   edit: deny
   bash: allow
