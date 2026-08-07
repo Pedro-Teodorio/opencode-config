@@ -20,6 +20,7 @@ Apply this rule when the current repository or an ancestor contains `harness.jso
 - `discuss`: read-only for product code; may update Markdown memory and active context.
 - `spec`: create or edit draft SDD artifacts; do not implement product code.
 - `build`: requires the explicit gate check, then executes tasks in dependency order.
+- `/init-harness` é o bootstrap e a única exceção Harness permitida antes da existência ou do discovery de `harness.json`; os demais comandos continuam exigindo o discovery normal.
 
 ## Approval and gates
 

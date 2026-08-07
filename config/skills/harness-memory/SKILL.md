@@ -14,6 +14,12 @@ This skill is the single source of truth for where Harness memory lives. Never h
 - Retrieval starts with filesystem Glob/Grep/Read. Do not use Obsidian CLI as the primary search path.
 - Keep `active-context.md` strict and machine-readable. Do not add callouts, embeds, prose properties, or decorative Obsidian syntax.
 
+## Bootstrap
+
+`/init-harness` is the only Harness operation allowed to run before successful discovery of `harness.json`. It collects and confirms the repository, product, vault, paths, and `memory.root` values before writing. The suggested `memory.root` is `{repo}` and the confirmed value is written explicitly to `harness.json`.
+
+The command must keep the commit-ready configuration free of `memory.vaultPath`, write the confirmed vault path only to `harness.local.json`, and then return to the normal merge, resolve, and doctor flow. If the bootstrap write or doctor fails, it must not report successful initialization. All other Harness operations still require the normal discovery flow.
+
 ## Defaults
 
 ```yaml
@@ -40,7 +46,7 @@ verify:
   final: []
 ```
 
-`paths.productRoot`, `product`, and `repo` have no safe default and are required. `memory.root` defaults to `repo-{repo}`.
+`paths.productRoot`, `product`, and `repo` have no safe default and are required. `memory.root` defaults to `{repo}`.
 
 ## Discover
 
@@ -71,7 +77,7 @@ Normalize paths without requiring them to exist first:
 
 ```text
 productDir      = {memory.vaultPath}/{paths.productRoot}
-repoMemoryRoot  = {productDir}/{memory.root or "repo-" + repo}
+repoMemoryRoot  = {productDir}/{memory.root or repo}
 specsDir        = {repoMemoryRoot}/{paths.specs}
 ideasDir        = {productDir}/{paths.ideas}
 activeContext   = {repoMemoryRoot}/{paths.activeContext}

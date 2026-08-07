@@ -63,6 +63,7 @@ command/approve.md
 command/build.md
 command/close.md
 command/discuss.md
+command/init-harness.md
 command/spec.md
 opencode.jsonc
 rules/README.md
@@ -109,6 +110,7 @@ skills/frontend-design/SKILL.md
 skills/frontend-patterns/SKILL.md
 skills/harness-memory/SKILL.md
 skills/harness-memory/references/active-context-template.md
+skills/harness-memory/references/bootstrap-vault-skeleton.md
 skills/harness-memory/references/harness-schema.md
 skills/harness-memory/references/mistake-ledger-template.md
 skills/harness-memory/references/session-log-template.md
@@ -149,7 +151,7 @@ $expected
 EOF
 
   if ! (CDPATH= cd -- "$CONFIG_ROOT" && sha256sum --check --strict --status <<'EOF'
-ae8b2a03122da19df32080e226e51f2bffb35818367a7b11ec329551a4df496e  AGENTS.md
+27f781ba1c68120abb23303696d59603dd9d1a82957ba238485a302d5c59996d  AGENTS.md
 23afd3d9dfa8d98455047be254082ba0e0c0780c3ea8a466e958421eb783012d  agents/architect.md
 f5c9ed4e20a848dc345da01785720ec86363464fb728b9432db558e6a2546069  agents/code-reviewer.md
 9768d0ab86f42188666a68e5009f721514fe72da1ccff917a5260d1dbf6b4b87  agents/discussion.md
@@ -159,6 +161,7 @@ c160c18c739fdd661feba5d83305e02820e5d7e799597ea8058a208a1b6ec189  command/approv
 70d75fc218d4e28245c57b1f9e96a79603c3d6309412ed09f4a16843d29c9668  command/build.md
 c140c75172ac73289eae3ed0e736af2f3601ab1fc15f2d8b91e09ccd77589c90  command/close.md
 248a3226b36aaf4b87da1c923134e0fb1bc25a41c94dd3d1bbfe31fcbc3c0d96  command/discuss.md
+95f86979520ba6fb51488615ef8a231a421ef9475523f28f8edb2d9f188fb489  command/init-harness.md
 70a3fa906f24d1339202488d1fb9814da77203ebc99522712a45d1617186a854  command/spec.md
 1dcfb0611238bfc78a0f8ba6657aabc24fbc1b99d6435fe24d584d29d1f5a6b2  opencode.jsonc
 c023eb141a1d594adb19d2500378b5fabc13613c96d9c995a80a2bdae947e703  rules/README.md
@@ -166,7 +169,7 @@ c023eb141a1d594adb19d2500378b5fabc13613c96d9c995a80a2bdae947e703  rules/README.m
 52d1da9e124bfbef9f65f0401ec76b48f8e6293c8971969303efd4d7292a6a90  rules/common/coding-style.md
 717c24653ae22f55b3e1e17304bdd650672a033c524ac4741871338d23d6e213  rules/common/development-workflow.md
 3c9e1ef09c9259b5c714f2f3cf8a50ca9b0c118d789cf8322d1f1cd3b6dd7ff7  rules/common/git-workflow.md
-9fcdb84fbf9baab75e284e3ea928504a41273227c4130b963c70a159740a5ca7  rules/common/harness.md
+9a9988fce6c70b7bdd7a5f4ba9e6fe205bd37f326ba7ad0e304f6b81d37d2a4b  rules/common/harness.md
 8a32c0552c8b309e961ef3f68a56ae84b0b1d411c17f23675ec26b685dea5e9a  rules/common/patterns.md
 f631e4abc940e8f2aa7dba779c97f46a4cf58598f6a3bc4e3fdcc418bc4acf3e  rules/common/performance.md
 58f0acc56331b8d554dd036b8a1d5b2305a908e3960ff1e2d7e55223d5918bc3  rules/common/security.md
@@ -203,9 +206,10 @@ fa254de821f708e5791c4c80d30309ac7da89c2888301e967becb3b21ac73331  skills/fronten
 0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594  skills/frontend-design/LICENSE.txt
 1608ea77fbb6fc30d13a97d12cfa8ebf31358d40f0dd97beed24829d6b3f45dd  skills/frontend-design/SKILL.md
 d32a3f430d658a8a8adb3d05da56fa1b49ef39cf2d1a6be8f27e5164f2d510df  skills/frontend-patterns/SKILL.md
-774b405fc5343156689ae655e610d5bebeafc8e668786a6e39a0d3f2270f5837  skills/harness-memory/SKILL.md
+2e051b2d7fe11d3d3bbfa22fec1b126c888fe54cce6bd125cafde092a2e8e64d  skills/harness-memory/SKILL.md
 8ec184a2fdc413576f464d5ecd4f677de0c6f0625f62db269d1e19988401b8e5  skills/harness-memory/references/active-context-template.md
-d596146f87c0ab718c6f6ead710e32b921f161360b85512f126577001f6ef1ef  skills/harness-memory/references/harness-schema.md
+fea756063e24e0623f6c6e46dbd0d11f93a0810750bf94b0b3c6aa5028a7f4f9  skills/harness-memory/references/bootstrap-vault-skeleton.md
+d071d207321018e5fb3e5a1ba922a8ad6719e6f68e278ff788b88da105cca025  skills/harness-memory/references/harness-schema.md
 e6cbea1c1d3e0291ed358e11fd5c8d614d3b6aa6bddea8d3f322d90c97091af8  skills/harness-memory/references/mistake-ledger-template.md
 f495a6c4f40f32734d83d8f595fc73595a0777bff3a301291635795d4273e6e1  skills/harness-memory/references/session-log-template.md
 30059e787adf320f666bf41b9b5de1dfb4f30a679ce0283bb3bc7386f808663b  skills/harness-sdd/SKILL.md
@@ -409,7 +413,7 @@ manifest() {
   [ "$managed" = "$actual" ] || fail 'managed-files.txt não corresponde exatamente à árvore config/'
 
   count=$(wc -l < "$MANAGED_MANIFEST")
-  [ "$count" -eq 75 ] || fail "managed-files.txt deve declarar exatamente 75 arquivos; encontrados: $count"
+  [ "$count" -eq 77 ] || fail "managed-files.txt deve declarar exatamente 77 arquivos; encontrados: $count"
 
   sorted=$(LC_ALL=C sort "$MANAGED_MANIFEST")
   [ "$managed" = "$sorted" ] || fail 'managed-files.txt não está deterministicamente ordenado'
@@ -542,7 +546,7 @@ cli_valid_commands() {
   assert_contains "$out" 'uninstalled' 'uninstall deve reportar remoção'
 
   link_count=$(find "$target" -type l | wc -l)
-  [ "$link_count" -eq 0 ] || fail "uninstall deve remover 75 links; restantes: $link_count"
+  [ "$link_count" -eq 0 ] || fail "uninstall deve remover 77 links; restantes: $link_count"
   [ ! -e "$target/.opencode-config-state" ] || fail 'uninstall deve remover state válido'
 
   rm -rf "$tmp"
@@ -1088,7 +1092,7 @@ preflight_install_empty_applies() {
   run_cli out status install --target "$target"
   assert_exit_zero "$status" 'install em destino vazio deve passar'
   link_count=$(find "$target" -type l | wc -l)
-  [ "$link_count" -eq 75 ] || fail 'install T5 deve criar os links após preflight'
+  [ "$link_count" -eq 77 ] || fail 'install T5 deve criar os links após preflight'
 
   rm -rf "$tmp"
 }
@@ -1159,7 +1163,7 @@ install_assert_links_and_real_containers() {
   local target=$1 path dest expected parent link_count
 
   link_count=$(find "$target" -type l | wc -l)
-  [ "$link_count" -eq 75 ] || fail "instalação limpa deve criar 75 symlinks; encontrados: $link_count"
+  [ "$link_count" -eq 77 ] || fail "instalação limpa deve criar 77 symlinks; encontrados: $link_count"
   while IFS= read -r path || [ -n "$path" ]; do
     dest="$target/$path"
     expected=$(readlink -f -- "$CONFIG_ROOT/$path")

@@ -10,7 +10,7 @@ Merge order: defaults < harness.json < harness.local.json < HARNESS_VAULT_PATH.
   "product": "meu-produto",
   "repo": "backend",
   "memory": {
-    "root": "repo-backend",
+    "root": "backend",
     "maxContextFiles": 12,
     "maxContextChars": 24000
   },
@@ -39,11 +39,11 @@ Merge order: defaults < harness.json < harness.local.json < HARNESS_VAULT_PATH.
 }
 ```
 
-Required values without defaults: `product`, `repo`, and `paths.productRoot`. `memory.vaultPath` is required only after merge and must come from local configuration or environment.
+Required values without defaults: `product`, `repo`, and `paths.productRoot`. `memory.root` defaults to `{repo}` and should be written explicitly by bootstrap. `memory.vaultPath` is required only after merge and must come from `harness.local.json` or the `HARNESS_VAULT_PATH` environment variable.
 
 ## Local file
 
-`harness.local.json` is gitignored:
+`harness.local.json` is gitignored and stores machine-local values only:
 
 ```json
 {
@@ -57,12 +57,12 @@ Required values without defaults: `product`, `repo`, and `paths.productRoot`. `m
 
 - Objects merge recursively.
 - Arrays and scalar values replace previous values.
-- `HARNESS_VAULT_PATH`, when non-empty, overrides `memory.vaultPath`.
+- `HARNESS_VAULT_PATH`, when non-empty, overrides `memory.vaultPath` from `harness.local.json`.
 - Unknown fields produce a doctor warning; unknown status/frontmatter fields are not propagated into machine contracts.
 
 ## Resolved paths
 
-`productDir` joins `vaultPath` and `productRoot`. `repoMemoryRoot` joins `productDir` and `memory.root`, defaulting the latter to `repo-{repo}`. Every other vault path is resolved from one of those roots according to the formulas in the skill.
+`productDir` joins `vaultPath` and `productRoot`. `repoMemoryRoot` joins `productDir` and `memory.root`, defaulting the latter to `{repo}`. Every other vault path is resolved from one of those roots according to the formulas in the skill.
 
 Paths below the vault are relative. Canonicalize roots and targets, then reject traversal or symlink escape outside `vaultPath`.
 

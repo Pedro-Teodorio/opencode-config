@@ -15,12 +15,14 @@ Quando o repo ou um ancestral contiver `harness.json`, use o fluxo vault-first:
 
 | Command | Responsabilidade |
 |---------|------------------|
+| `/init-harness` | Bootstrap inicial do Harness |
 | `/discuss` | Discussão read-only para código; ideas no vault |
 | `/spec` | Cria spec, plan e tasks em draft |
 | `/approve` | Registra aprovação humana de spec e/ou plan |
 | `/build` | Executa tasks aprovadas com TDD, Verify e Evidence |
 | `/close` | Fecha a sessão partial ou total e persiste memória |
 
+- `/init-harness` é a única exceção Harness permitida antes da existência ou do discovery de `harness.json`; os demais comandos continuam exigindo o discovery normal.
 - Carregue `harness-memory` para discovery, paths, doctor, retrieval e escrita de estado.
 - Carregue `harness-sdd` para templates, statuses, approve, cascata, gates, Verify e Evidence.
 - Use `obsidian-markdown` somente na prosa humana indicada; active-context e tasks permanecem estritos.
