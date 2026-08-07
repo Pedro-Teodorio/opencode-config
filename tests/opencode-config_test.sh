@@ -66,6 +66,7 @@ command/discuss.md
 command/init-harness.md
 command/spec.md
 opencode.jsonc
+plugins/rtk.ts
 rules/README.md
 rules/common/agents.md
 rules/common/coding-style.md
@@ -164,6 +165,7 @@ c140c75172ac73289eae3ed0e736af2f3601ab1fc15f2d8b91e09ccd77589c90  command/close.
 95f86979520ba6fb51488615ef8a231a421ef9475523f28f8edb2d9f188fb489  command/init-harness.md
 70a3fa906f24d1339202488d1fb9814da77203ebc99522712a45d1617186a854  command/spec.md
 1dcfb0611238bfc78a0f8ba6657aabc24fbc1b99d6435fe24d584d29d1f5a6b2  opencode.jsonc
+6530c131946c84892f9522abd68d4e513e1e658d8ddbad1f59388c86ebbcb6bb  plugins/rtk.ts
 c023eb141a1d594adb19d2500378b5fabc13613c96d9c995a80a2bdae947e703  rules/README.md
 5c98f01ec3c0ab8bba04a82c67a2584e7f9265e5ddc2b0e5781bbe50b1497c65  rules/common/agents.md
 52d1da9e124bfbef9f65f0401ec76b48f8e6293c8971969303efd4d7292a6a90  rules/common/coding-style.md
@@ -413,7 +415,7 @@ manifest() {
   [ "$managed" = "$actual" ] || fail 'managed-files.txt não corresponde exatamente à árvore config/'
 
   count=$(wc -l < "$MANAGED_MANIFEST")
-  [ "$count" -eq 77 ] || fail "managed-files.txt deve declarar exatamente 77 arquivos; encontrados: $count"
+  [ "$count" -eq 78 ] || fail "managed-files.txt deve declarar exatamente 78 arquivos; encontrados: $count"
 
   sorted=$(LC_ALL=C sort "$MANAGED_MANIFEST")
   [ "$managed" = "$sorted" ] || fail 'managed-files.txt não está deterministicamente ordenado'
@@ -546,7 +548,7 @@ cli_valid_commands() {
   assert_contains "$out" 'uninstalled' 'uninstall deve reportar remoção'
 
   link_count=$(find "$target" -type l | wc -l)
-  [ "$link_count" -eq 0 ] || fail "uninstall deve remover 77 links; restantes: $link_count"
+  [ "$link_count" -eq 0 ] || fail "uninstall deve remover 78 links; restantes: $link_count"
   [ ! -e "$target/.opencode-config-state" ] || fail 'uninstall deve remover state válido'
 
   rm -rf "$tmp"
@@ -1092,7 +1094,7 @@ preflight_install_empty_applies() {
   run_cli out status install --target "$target"
   assert_exit_zero "$status" 'install em destino vazio deve passar'
   link_count=$(find "$target" -type l | wc -l)
-  [ "$link_count" -eq 77 ] || fail 'install T5 deve criar os links após preflight'
+  [ "$link_count" -eq 78 ] || fail 'install T5 deve criar os links após preflight'
 
   rm -rf "$tmp"
 }
@@ -1163,7 +1165,7 @@ install_assert_links_and_real_containers() {
   local target=$1 path dest expected parent link_count
 
   link_count=$(find "$target" -type l | wc -l)
-  [ "$link_count" -eq 77 ] || fail "instalação limpa deve criar 77 symlinks; encontrados: $link_count"
+  [ "$link_count" -eq 78 ] || fail "instalação limpa deve criar 78 symlinks; encontrados: $link_count"
   while IFS= read -r path || [ -n "$path" ]; do
     dest="$target/$path"
     expected=$(readlink -f -- "$CONFIG_ROOT/$path")

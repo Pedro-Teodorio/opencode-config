@@ -11,6 +11,7 @@ command/discuss.md
 command/init-harness.md
 command/spec.md
 opencode.jsonc
+plugins/rtk.ts
 rules/README.md
 rules/common/agents.md
 rules/common/coding-style.md
